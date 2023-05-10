@@ -25,9 +25,9 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf
                 .ignoringAntMatchers("/h2-console/**")) // h2-console'a csrf isteği gönderme.
             .authorizeHttpRequests(auth -> auth
-                .antMatchers("/h2-console/**", "/index").permitAll() // bu controllera gelen isteklerin tümüne izin ver.
-                .mvcMatchers("/dashboard").hasAnyAuthority("ADMIN", "USER") // admin ya da user rolüne sahip olanlar.
                 .mvcMatchers("/admin").hasAuthority("ADMIN") // sadece admin rolüne sahip olanlar.
+                .mvcMatchers("/dashboard").hasAnyAuthority("ADMIN", "USER") // admin ya da user rolüne sahip olanlar.
+                .antMatchers("/h2-console/**", "/index").permitAll() // bu controllera gelen isteklerin tümüne izin ver.
                 .anyRequest().authenticated() // diğer tüm isteklerin yetkisi olmalı.
             )
             .userDetailsService(customUserDetailService) // kullanıcı bilgilerini veritabanından al.
